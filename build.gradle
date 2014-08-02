@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.11.0'
+    }
+}
+
+def isSnapshot() {
+    return VERSION_NAME.contains('SNAPSHOT')
+}
+
+def gradleMvnPush = new File(buildDir, 'gradle-mvn-push.gradle')
+if (!gradleMvnPush.exists()) {
+    buildDir.mkdirs()
+    ant.get(src: GRADLE_MVN_PUSH, dest: gradleMvnPush)
+}
+
+setProperty('GRADLE_MVN_PUSH', gradleMvnPush)
+
+subprojects {
+    group GROUP
+    version VERSION_NAME
+
+    apply plugin: 'android-sdk-manager'
+
+    if (name.startsWith('lib')) {
+        apply plugin: 'com.android.library'
+    } else {
+        apply plugin: 'com.android.application'
+    }
+
+    android {
+        compileSdkVersion COMPILE_SDK_VERSION as int
+        buildToolsVersion BUILD_TOOLS_VERSION
+
+        defaultConfig {
+            minSdkVersion MIN_SDK_VERSION as int
+            targetSdkVersion TARGET_SDK_VERSION as int
+            versionCode 1
+            versionName '1.0'
+
+            // workaround for https://code.google.com/p/android/issues/detail?id=52962
+            buildConfigField 'boolean', 'SNAPSHOT', isSnapshot().toString()
+        }
+
+        lintOptions {
+            abortOnError false
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    if (isSnapshot()) {
+        apply plugin: 'robolectric'
+
+        dependencies {
+            // NOTE workaround for sdkmanager plugin
+            compile 'com.android.support:support-v4:19.0.1'
+
+            androidTestCompile 'junit:junit:4.10'
+            androidTestCompile 'org.robolectric:robolectric:2.3'
+            androidTestCompile 'com.squareup:fest-android:1.0.8'
+        }
+    }
+}
