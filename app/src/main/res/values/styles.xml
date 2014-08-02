@@ -2,10 +2,12 @@
 <resources>
     <style name="AppTheme.Light" parent="android:Theme.Light">
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
+        <item name="fabBackgroundColor">@color/fab_background_color_light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="android:Theme">
         <item name="icActionEdit">@drawable/ic_action_edit_dark</item>
+        <item name="fabBackgroundColor">@color/fab_background_color_dark</item>
     </style>
 
     <!-- Default theme -->

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -15,6 +18,25 @@ public class FloatingActionButton extends ImageView {
 
     private int mSize;
     private int mColor;
+
+    public int getSize() {
+        return mSize;
+    }
+
+    /**
+     * @param size {@link #SIZE_NORMAL} or {@link #SIZE_MINI}
+     */
+    public void setSize(int size) {
+        mSize = size;
+    }
+
+    public int getColor() {
+        return mColor;
+    }
+
+    public void setColor(int color) {
+        mColor = color;
+    }
 
     public FloatingActionButton(Context context) {
         super(context);
@@ -32,25 +54,29 @@ public class FloatingActionButton extends ImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        mSize = SIZE_NORMAL;
-        mColor = Color.WHITE;
+        TypedArray a;
 
-        if (isInEditMode()) {
-            return;
-        }
+        try {
+            if (isInEditMode()) {
+                return;
+            }
 
-        if (attrs == null) {
-            return;
-        }
+            if (attrs == null) {
+                return;
+            }
 
-        Resources.Theme theme = context.getTheme();
-        if (theme == null) {
-            return;
-        }
+            Resources.Theme theme = context.getTheme();
+            if (theme == null) {
+                return;
+            }
 
-        TypedArray a = theme.obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, 0, 0);
-        if (a == null) {
-            return;
+            a = theme.obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, 0, 0);
+            if (a == null) {
+                return;
+            }
+        } finally {
+            mSize = SIZE_NORMAL;
+            mColor = Color.WHITE;
         }
 
         try {
@@ -67,12 +93,32 @@ public class FloatingActionButton extends ImageView {
         setColor(a.getColor(R.styleable.FloatingActionButton_fabColor, Color.WHITE));
     }
 
-    private void initBackground() {
-        if (true) {
-            return;
+    public void initBackground() {
+        final int backgroundId;
+
+        if (mSize == SIZE_MINI) {
+            backgroundId = R.drawable.com_shamanland_fab_circle_mini;
+        } else {
+            backgroundId = R.drawable.com_shamanland_fab_circle_normal;
         }
 
-        Drawable background = null;
+        Drawable background = getResources().getDrawable(backgroundId);
+
+        if (background instanceof LayerDrawable) {
+            LayerDrawable layers = (LayerDrawable) background;
+            if (layers.getNumberOfLayers() == 2) {
+                Drawable shadow = layers.getDrawable(0);
+                Drawable circle = layers.getDrawable(1);
+
+                if (shadow instanceof GradientDrawable) {
+                    ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
+                }
+
+                if (circle instanceof GradientDrawable) {
+                    ((GradientDrawable) circle.mutate()).setColor(mColor);
+                }
+            }
+        }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             //noinspection deprecation
@@ -82,14 +128,14 @@ public class FloatingActionButton extends ImageView {
         }
     }
 
-    /**
-     * @param size one of {@link #SIZE_NORMAL} or {@link #SIZE_MINI}
-     */
-    public void setSize(int size) {
-        mSize = size;
-    }
+    protected static int getShadowRadius(Drawable shadow, Drawable circle) {
+        int radius = 0;
 
-    public void setColor(int color) {
-        mColor = color;
+        if (shadow != null && circle != null) {
+            Rect rect = new Rect();
+            radius = (circle.getIntrinsicWidth() + (shadow.getPadding(rect) ? rect.left + rect.right : 0)) / 2;
+        }
+
+        return Math.max(1, radius);
     }
 }
