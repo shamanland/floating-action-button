@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Default style attribute which will be used during construction of FloatingActionButton. -->
     <attr name="floatingActionButtonStyle" format="reference"/>
 </resources>

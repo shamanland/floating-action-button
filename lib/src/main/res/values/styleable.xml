@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="FloatingActionButton">
+        <!-- Background color -->
         <attr name="floatingActionButtonColor" format="color|reference"/>
+        <!-- Size of action button -->
         <attr name="floatingActionButtonSize" format="enum">
+            <!-- 56dp -->
             <enum name="normal" value="0"/>
+            <!-- 40dp -->
             <enum name="mini" value="1"/>
         </attr>
     </declare-styleable>

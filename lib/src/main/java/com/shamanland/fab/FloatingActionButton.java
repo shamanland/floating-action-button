@@ -10,30 +10,98 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class FloatingActionButton extends ImageView {
+/**
+ * A circular button made of paper that lifts and emits ink reactions on press.
+ * <p/>
+ * This widget supports two sizes: {@link #SIZE_NORMAL} and {@link #SIZE_MINI}
+ * according to <a href="http://www.google.com/design/spec/patterns/promoted-actions.html">Promoted Actions</a> pattern.
+ * <p/>
+ * Like an {@link ImageView} this widget require {@code android:src} attribute.
+ * According to official documentation this drawable should be not more than {@code 24dp}.
+ * <p/>
+ * Use theme to customize all floating buttons in your app:
+ * <p/>
+ * Declare own style:
+ * <pre>
+ * &lt;style name=&quot;AppTheme.Fab&quot; parent=&quot;FloatingActionButton&quot;&gt;
+ *   &lt;item name=&quot;floatingActionButtonColor&quot;&gt;@color/my_fab_color&lt;/item&gt;
+ * &lt;/style&gt;
+ * </pre>
+ * Link this style in your theme:
+ * <pre>
+ * &lt;style name=&quot;AppTheme&quot; parent=&quot;android:Theme&quot;&gt;
+ *   &lt;item name=&quot;floatingActionButtonStyle&quot;&gt;@style/AppTheme.Fab&lt;/item&gt;
+ * &lt;/style&gt;
+ * </pre>
+ * <p/>
+ * Customizing in layout.xml:
+ * <pre>
+ * &lt;com.shamanland.fab.FloatingActionButton
+ *   android:layout_width=&quot;wrap_content&quot;
+ *   android:layout_height=&quot;wrap_content&quot;
+ *   android:src=&quot;@drawable/ic_action_my&quot;
+ *   app:floatingActionButtonColor=&quot;@color/my_fab_color&quot;
+ *   app:floatingActionButtonSize=&quot;mini&quot;
+ *   /&gt;
+ * </pre>
+ * <p/>
+ * Customizing in java-code:
+ * <pre>
+ * FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+ * fab.setSize(FloatingActionButton.SIZE_MINI);
+ * fab.setColor(Color.RED);
+ * // NOTE invoke this method after setting new values!
+ * fab.initBackground();
+ * // NOTE standard method of ImageView
+ * fab.setImageResource(R.drawable.ic_action_my);
+ * </pre>
+ */
+public class FloatingActionButton extends ImageButton {
     public static final int SIZE_NORMAL = 0;
     public static final int SIZE_MINI = 1;
 
     private int mSize;
     private int mColor;
 
+    /**
+     * Gets abstract size of this button.
+     *
+     * @return {@link #SIZE_NORMAL} or {@link #SIZE_MINI}
+     */
     public int getSize() {
         return mSize;
     }
 
     /**
+     * Sets abstract size for this button.
+     * <p/>
+     * Xml attribute: {@code app:floatingActionButtonSize}
+     *
      * @param size {@link #SIZE_NORMAL} or {@link #SIZE_MINI}
      */
     public void setSize(int size) {
         mSize = size;
     }
 
+    /**
+     * Gets background color of this button.
+     *
+     * @return color
+     */
     public int getColor() {
         return mColor;
     }
 
+    /**
+     * Sets background color for this button.
+     * <p/>
+     * Xml attribute: {@code app:floatingActionButtonColor}
+     *
+     * @param color color
+     */
     public void setColor(int color) {
         mColor = color;
     }
@@ -93,6 +161,12 @@ public class FloatingActionButton extends ImageView {
         setColor(a.getColor(R.styleable.FloatingActionButton_floatingActionButtonColor, Color.GRAY));
     }
 
+    /**
+     * Inflate and initialize background drawable for this view with arguments
+     * inflated from xml or specified using {@link #setSize(int)} or {@link #setColor(int)}
+     * <p/>
+     * Invoked from constructor, but it's allowed to invoke this method manually from code.
+     */
     public void initBackground() {
         final int backgroundId;
 
@@ -128,6 +202,13 @@ public class FloatingActionButton extends ImageView {
         }
     }
 
+    /**
+     * Calculates required radius of shadow.
+     *
+     * @param shadow underlay drawable
+     * @param circle overlay drawable
+     * @return calculated radius, always >= 1
+     */
     protected static int getShadowRadius(Drawable shadow, Drawable circle) {
         int radius = 0;
 
