@@ -3,13 +3,18 @@ package com.shamanland.fab;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class FloatingActionButton extends ImageView {
     public static final int SIZE_NORMAL = 0;
     public static final int SIZE_MINI = 1;
+
+    private int mSize;
+    private int mColor;
 
     public FloatingActionButton(Context context) {
         super(context);
@@ -27,6 +32,13 @@ public class FloatingActionButton extends ImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
+        mSize = SIZE_NORMAL;
+        mColor = Color.WHITE;
+
+        if (isInEditMode()) {
+            return;
+        }
+
         if (attrs == null) {
             return;
         }
@@ -46,41 +58,38 @@ public class FloatingActionButton extends ImageView {
         } finally {
             a.recycle();
         }
+
+        initBackground();
     }
 
     private void initAttrs(TypedArray a) {
         setSize(a.getInteger(R.styleable.FloatingActionButton_fabSize, SIZE_NORMAL));
+        setColor(a.getColor(R.styleable.FloatingActionButton_fabColor, Color.WHITE));
+    }
+
+    private void initBackground() {
+        if (true) {
+            return;
+        }
+
+        Drawable background = null;
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            //noinspection deprecation
+            setBackgroundDrawable(background);
+        } else {
+            setBackground(background);
+        }
     }
 
     /**
      * @param size one of {@link #SIZE_NORMAL} or {@link #SIZE_MINI}
      */
     public void setSize(int size) {
-        int value = getSizeOf(size);
-
-        if (getWidth() == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            setMinimumWidth(value);
-            setMaxWidth(value);
-        }
-
-        if (getHeight() == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            setMinimumHeight(value);
-            setMaxHeight(value);
-        }
+        mSize = size;
     }
 
-    /**
-     * @param size one of {@link #SIZE_NORMAL} or {@link #SIZE_MINI}
-     * @return size in pixels
-     */
-    public int getSizeOf(int size) {
-        switch (size) {
-            case SIZE_NORMAL:
-                return getResources().getDimensionPixelSize(R.dimen.com_shamanland_fab_size);
-            case SIZE_MINI:
-                return getResources().getDimensionPixelSize(R.dimen.com_shamanland_fab_size_mini);
-        }
-
-        throw new IllegalArgumentException(String.valueOf(size));
+    public void setColor(int color) {
+        mColor = color;
     }
 }

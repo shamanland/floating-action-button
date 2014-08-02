@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme.Light" parent="android:Theme.Holo.Light">
-        <!-- Customize your theme here. -->
+        <item name="icActionEdit">@drawable/ic_action_edit_light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="android:Theme.Holo">
-        <!-- Customize your theme here. -->
+        <item name="icActionEdit">@drawable/ic_action_edit_dark</item>
     </style>
 
     <!-- Default theme -->

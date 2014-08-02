@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="oval">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="100"
+        android:startColor="#f000"
+        android:endColor="#0000"
+        />
+    <padding
+        android:left="@dimen/com_shamanland_fab_shadow_radius"
+        android:top="@dimen/com_shamanland_fab_shadow_radius"
+        android:right="@dimen/com_shamanland_fab_shadow_radius"
+        android:bottom="@dimen/com_shamanland_fab_shadow_radius"/>
+</shape>

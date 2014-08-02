@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class ExampleActivity extends Activity {
     @Override
@@ -15,6 +16,9 @@ public class ExampleActivity extends Activity {
         super.onCreate(state);
 
         setContentView(R.layout.a_example);
+
+        ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(new ExampleAdapter());
     }
 
     @Override
