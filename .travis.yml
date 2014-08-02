@@ -1,2 +1,2 @@
 language: android
-script: ./gradlew clean build test --debug
+script: ./gradlew clean build test --info
