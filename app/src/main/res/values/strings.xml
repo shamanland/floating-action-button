@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Floating Action Button</string>
     <string name="hello_world">Hello world!</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

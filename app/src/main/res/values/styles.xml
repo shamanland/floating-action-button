@@ -1,5 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Light">
+    <style name="AppTheme.Light" parent="android:Theme.Light">
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="AppTheme.Dark" parent="android:Theme">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Default theme -->
+    <style name="AppTheme" parent="AppTheme.Light"/>
 </resources>
