@@ -5,8 +5,8 @@
         <shape android:shape="oval">
             <solid android:color="@android:color/white"/>
             <size
-                android:width="@dimen/com_shamanland_fab_size_normal"
-                android:height="@dimen/com_shamanland_fab_size_normal"/>
+                android:width="@dimen/floating_action_button_size_normal"
+                android:height="@dimen/floating_action_button_size_normal"/>
         </shape>
     </item>
 </layer-list>

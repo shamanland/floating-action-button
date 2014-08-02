@@ -40,20 +40,20 @@ public class FloatingActionButton extends ImageView {
 
     public FloatingActionButton(Context context) {
         super(context);
-        init(context, null);
+        init(context, null, 0);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(context, attrs, R.attr.floatingActionButtonStyle);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context, attrs);
+        init(context, attrs, defStyle);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs, int defStyle) {
         TypedArray a;
 
         try {
@@ -70,13 +70,13 @@ public class FloatingActionButton extends ImageView {
                 return;
             }
 
-            a = theme.obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, 0, 0);
+            a = theme.obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyle, R.style.FloatingActionButton_Dark);
             if (a == null) {
                 return;
             }
         } finally {
             mSize = SIZE_NORMAL;
-            mColor = Color.WHITE;
+            mColor = Color.GRAY;
         }
 
         try {
@@ -89,8 +89,8 @@ public class FloatingActionButton extends ImageView {
     }
 
     private void initAttrs(TypedArray a) {
-        setSize(a.getInteger(R.styleable.FloatingActionButton_fabSize, SIZE_NORMAL));
-        setColor(a.getColor(R.styleable.FloatingActionButton_fabColor, Color.WHITE));
+        setSize(a.getInteger(R.styleable.FloatingActionButton_floatingActionButtonSize, SIZE_NORMAL));
+        setColor(a.getColor(R.styleable.FloatingActionButton_floatingActionButtonColor, Color.GRAY));
     }
 
     public void initBackground() {

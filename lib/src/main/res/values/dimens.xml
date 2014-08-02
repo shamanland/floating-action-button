@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="com_shamanland_fab_size_normal">56dp</dimen>
-    <dimen name="com_shamanland_fab_size_mini">40dp</dimen>
-    <dimen name="com_shamanland_fab_shadow_radius">6dp</dimen>
+    <dimen name="floating_action_button_size_normal">56dp</dimen>
+    <dimen name="floating_action_button_size_mini">40dp</dimen>
+    <dimen name="floating_action_button_shadow_radius">6dp</dimen>
 </resources>

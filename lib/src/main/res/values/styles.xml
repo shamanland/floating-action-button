@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FloatingActionButton">
+        <item name="floatingActionButtonSize">normal</item>
+    </style>
+
+    <style name="FloatingActionButton.Mini" parent="FloatingActionButton">
+        <item name="floatingActionButtonSize">mini</item>
+    </style>
+
+    <style name="FloatingActionButton.Light" parent="FloatingActionButton">
+        <item name="floatingActionButtonColor">@android:color/primary_text_dark</item>
+    </style>
+
+    <style name="FloatingActionButton.Light.Mini" parent="FloatingActionButton.Mini">
+        <item name="floatingActionButtonColor">@android:color/primary_text_dark</item>
+    </style>
+
+    <style name="FloatingActionButton.Dark" parent="FloatingActionButton">
+        <item name="floatingActionButtonColor">@android:color/tab_indicator_text</item>
+    </style>
+
+    <style name="FloatingActionButton.Dark.Mini" parent="FloatingActionButton.Mini">
+        <item name="floatingActionButtonColor">@android:color/tab_indicator_text</item>
+    </style>
+</resources>

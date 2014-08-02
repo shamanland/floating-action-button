@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme.Light" parent="android:Theme.Light">
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
-        <item name="fabBackgroundColor">@color/fab_background_color_light</item>
+        <item name="floatingActionButtonStyle">@style/AppTheme.Fab.Light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="android:Theme">
         <item name="icActionEdit">@drawable/ic_action_edit_dark</item>
-        <item name="fabBackgroundColor">@color/fab_background_color_dark</item>
+        <item name="floatingActionButtonStyle">@style/AppTheme.Fab.Light</item>
     </style>
 
     <!-- Default theme -->
     <style name="AppTheme" parent="AppTheme.Light"/>
+
+    <style name="AppTheme.Fab.Light" parent="FloatingActionButton">
+        <item name="floatingActionButtonColor">#fd8</item>
+    </style>
+
+    <style name="AppTheme.Fab.Dark" parent="FloatingActionButton">
+        <item name="floatingActionButtonColor">#840</item>
+    </style>
 </resources>

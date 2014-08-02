@@ -8,8 +8,8 @@
         android:endColor="#0000"
         />
     <padding
-        android:left="@dimen/com_shamanland_fab_shadow_radius"
-        android:top="@dimen/com_shamanland_fab_shadow_radius"
-        android:right="@dimen/com_shamanland_fab_shadow_radius"
-        android:bottom="@dimen/com_shamanland_fab_shadow_radius"/>
+        android:left="@dimen/floating_action_button_shadow_radius"
+        android:top="@dimen/floating_action_button_shadow_radius"
+        android:right="@dimen/floating_action_button_shadow_radius"
+        android:bottom="@dimen/floating_action_button_shadow_radius"/>
 </shape>
