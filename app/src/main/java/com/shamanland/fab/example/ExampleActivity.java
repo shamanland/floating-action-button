@@ -64,8 +64,8 @@ public class ExampleActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             super.recreate();
         } else {
-            startActivity(getIntent());
             finish();
+            startActivity(getIntent());
         }
     }
 }
