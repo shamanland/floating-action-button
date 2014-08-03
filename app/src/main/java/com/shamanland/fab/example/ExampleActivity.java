@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ListView;
 
 public class ExampleActivity extends Activity {
@@ -17,8 +20,58 @@ public class ExampleActivity extends Activity {
 
         setContentView(R.layout.a_example);
 
-        ListView listView = (ListView) findViewById(android.R.id.list);
+        final ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(new ExampleAdapter());
+
+        final View fab = findViewById(R.id.fab);
+
+        final GestureDetector detector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            float downY;
+            boolean direction;
+            boolean handling;
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                downY = e.getY();
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                if (handling) {
+                    return false;
+                }
+
+                if (direction != distanceY > 0) {
+                    direction = !direction;
+                    downY = e2.getY();
+                }
+
+                float distance = downY - e2.getY();
+
+                if (distance < -50) {
+                    // NOTE scroll down
+                    if (fab.getVisibility() != View.VISIBLE) {
+                        fab.setVisibility(View.VISIBLE);
+                    }
+                } else if (distance > 50) {
+                    // NOTE scroll up
+                    if (fab.getVisibility() == View.VISIBLE) {
+                        fab.setVisibility(View.GONE);
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                detector.onTouchEvent(event);
+                return false;
+            }
+        });
     }
 
     @Override
