@@ -7,6 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+/**
+ * Implementation of {@link View.OnTouchListener} which uses {@link GestureDetector} to recognize scrolling events.
+ */
 public abstract class ScrollDetector extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
     private final GestureDetector mDetector;
     private final int mSlop;
@@ -15,10 +18,21 @@ public abstract class ScrollDetector extends GestureDetector.SimpleOnGestureList
     private boolean mDirection;
     private boolean mIgnore;
 
+    /**
+     * Called when {@link #onScroll(MotionEvent, MotionEvent, float, float)} recognize direction of user gesture as DOWN.
+     */
     public abstract void onScrollDown();
 
+    /**
+     * Called when {@link #onScroll(MotionEvent, MotionEvent, float, float)} recognize direction of user gesture as UP.
+     */
     public abstract void onScrollUp();
 
+    /**
+     * Disable/enable handling of {@link #onScroll(MotionEvent, MotionEvent, float, float)}.
+     *
+     * @param ignore true - disable, false - enable
+     */
     public void setIgnore(boolean ignore) {
         mIgnore = ignore;
     }

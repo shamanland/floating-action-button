@@ -60,7 +60,14 @@ import android.widget.ImageView;
  * </pre>
  */
 public class FloatingActionButton extends ImageButton {
+    /**
+     * Constant representing normal size {@code 56dp}. Value: 0x0
+     */
     public static final int SIZE_NORMAL = 0;
+
+    /**
+     * Constant representing mini size {@code 40dp}. Value: 0x1
+     */
     public static final int SIZE_MINI = 1;
 
     private int mSize;
