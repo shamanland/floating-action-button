@@ -1,25 +1,27 @@
 package com.shamanland.fab.example;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.shamanland.fab.ShowHideOnScroll;
 
-public class ExampleActivity extends Activity {
+public class ExampleListActivity extends Activity {
     @Override
     protected void onCreate(Bundle state) {
         setTheme(getSavedTheme());
 
         super.onCreate(state);
 
-        setContentView(R.layout.a_example);
+        setContentView(R.layout.a_example_list);
 
         View fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +34,12 @@ public class ExampleActivity extends Activity {
         ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(new ExampleAdapter());
         listView.setOnTouchListener(new ShowHideOnScroll(fab));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(view.getContext(), ExampleDetailsActivity.class));
+            }
+        });
     }
 
     @Override
