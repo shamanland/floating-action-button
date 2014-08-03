@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
+
+import com.shamanland.fab.ScrollDetector;
 
 public class ExampleActivity extends Activity {
     @Override
@@ -25,51 +25,19 @@ public class ExampleActivity extends Activity {
 
         final View fab = findViewById(R.id.fab);
 
-        final GestureDetector detector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            float downY;
-            boolean direction;
-            boolean handling;
-
+        listView.setOnTouchListener(new ScrollDetector(this) {
             @Override
-            public boolean onDown(MotionEvent e) {
-                downY = e.getY();
-                return false;
+            public void onScrollDown() {
+                if (fab.getVisibility() != View.VISIBLE) {
+                    fab.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                if (handling) {
-                    return false;
+            public void onScrollUp() {
+                if (fab.getVisibility() == View.VISIBLE) {
+                    fab.setVisibility(View.GONE);
                 }
-
-                if (direction != distanceY > 0) {
-                    direction = !direction;
-                    downY = e2.getY();
-                }
-
-                float distance = downY - e2.getY();
-
-                if (distance < -50) {
-                    // NOTE scroll down
-                    if (fab.getVisibility() != View.VISIBLE) {
-                        fab.setVisibility(View.VISIBLE);
-                    }
-                } else if (distance > 50) {
-                    // NOTE scroll up
-                    if (fab.getVisibility() == View.VISIBLE) {
-                        fab.setVisibility(View.GONE);
-                    }
-                }
-
-                return false;
-            }
-        });
-
-        listView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                detector.onTouchEvent(event);
-                return false;
             }
         });
     }
