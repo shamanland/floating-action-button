@@ -8,8 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.shamanland.fab.ScrollDetector;
+import com.shamanland.fab.ShowHideOnScroll;
 
 public class ExampleActivity extends Activity {
     @Override
@@ -20,26 +21,17 @@ public class ExampleActivity extends Activity {
 
         setContentView(R.layout.a_example);
 
-        final ListView listView = (ListView) findViewById(android.R.id.list);
-        listView.setAdapter(new ExampleAdapter());
-
-        final View fab = findViewById(R.id.fab);
-
-        listView.setOnTouchListener(new ScrollDetector(this) {
+        View fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrollDown() {
-                if (fab.getVisibility() != View.VISIBLE) {
-                    fab.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onScrollUp() {
-                if (fab.getVisibility() == View.VISIBLE) {
-                    fab.setVisibility(View.GONE);
-                }
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), R.string.action_clicked, Toast.LENGTH_SHORT).show();
             }
         });
+
+        ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(new ExampleAdapter());
+        listView.setOnTouchListener(new ShowHideOnScroll(fab));
     }
 
     @Override
