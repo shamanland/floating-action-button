@@ -62,7 +62,7 @@ listView.setOnTouchListener(new ShowHideOnScroll(fab));
 **With custom animations:**
 
 ```
-listView.setOnTouchListener(new ShowHideOnScroll(fab));
+listView.setOnTouchListener(new ShowHideOnScroll(fab, R.anim.custom_show, R.anim.custom_hide));
 ```
 
 ## Customizing
