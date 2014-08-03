@@ -6,7 +6,9 @@ A circular button made of paper that lifts and emits ink reactions on press.
 
 This widget supports two sizes according to [Promoted Actions][2] pattern: **normal** and **mini**.
 
-Like an `ImageView` this widget require `android:src` attribute. According to official documentation this drawable should be not more than `24dp`.   
+Like an `ImageView` this widget require `android:src` attribute. According to official documentation this drawable should be not more than `24dp`.
+
+JavaDoc is [here][1].
 
 ## Gradle dependency
 
@@ -18,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.shamanland:fab:0.0.1'
+    compile 'com.shamanland:fab:0.0.2'
 }
 ```
 
@@ -32,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.shamanland:fab:0.0.1-SNAPSHOT'
+    compile 'com.shamanland:fab:0.0.2-SNAPSHOT'
 }
 ```
 
@@ -40,6 +42,28 @@ dependencies {
 
 ![light](https://drive.google.com/uc?id=0Bwh0SNLPmjQBRkFoZE04VF90Q2M)
 ![dark](https://drive.google.com/uc?id=0Bwh0SNLPmjQBZndXMi13Q3l3Qms)
+
+## Show/hide when user scrolls down/up
+
+**Set custom OnTouchListener for scrollable view:**
+
+```
+import com.shamanland.fab.FloatingActionButton;
+import com.shamanland.fab.ShowHideOnScroll;
+
+// ...
+
+FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+ListView listView = (ListView) findViewById(android.R.id.list);
+listView.setOnTouchListener(new ShowHideOnScroll(fab));
+```
+
+**With custom animations:**
+
+```
+listView.setOnTouchListener(new ShowHideOnScroll(fab));
+```
 
 ## Customizing
 
