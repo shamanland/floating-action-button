@@ -42,6 +42,7 @@ dependencies {
 
 ![light](https://drive.google.com/uc?id=0Bwh0SNLPmjQBRkFoZE04VF90Q2M)
 ![dark](https://drive.google.com/uc?id=0Bwh0SNLPmjQBZndXMi13Q3l3Qms)
+![between](https://drive.google.com/uc?id=0Bwh0SNLPmjQBQTd0S3lZNlJFdzQ)
 
 ## Show/hide when user scrolls down/up
 

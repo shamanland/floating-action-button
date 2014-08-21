@@ -15,10 +15,10 @@
     <style name="AppTheme" parent="AppTheme.Light"/>
 
     <style name="AppTheme.Fab.Light" parent="FloatingActionButton">
-        <item name="floatingActionButtonColor">#fd8</item>
+        <item name="floatingActionButtonColor">@color/fab_light</item>
     </style>
 
     <style name="AppTheme.Fab.Dark" parent="FloatingActionButton">
-        <item name="floatingActionButtonColor">#840</item>
+        <item name="floatingActionButtonColor">@color/fab_dark</item>
     </style>
 </resources>
