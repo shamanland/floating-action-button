@@ -1,6 +1,7 @@
 package com.shamanland.fab;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -72,6 +73,9 @@ public class FloatingActionButton extends ImageButton {
 
     private int mSize;
     private int mColor;
+    private ColorStateList mColorStateList;
+
+    private GradientDrawable mCircleDrawable;
 
     /**
      * Gets abstract size of this button.
@@ -113,6 +117,26 @@ public class FloatingActionButton extends ImageButton {
         mColor = color;
     }
 
+    /**
+     * Gets color state list used as background for this button.
+     *
+     * @return may be null
+     */
+    public ColorStateList getColorStateList() {
+        return mColorStateList;
+    }
+
+    /**
+     * Sets color state list as background for this button.
+     * <p/>
+     * Xml attribute: {@code app:floatingActionButtonColor}
+     *
+     * @param colorStateList color
+     */
+    public void setColorStateList(ColorStateList colorStateList) {
+        mColorStateList = colorStateList;
+    }
+
     public FloatingActionButton(Context context) {
         super(context);
         init(context, null, 0);
@@ -152,6 +176,7 @@ public class FloatingActionButton extends ImageButton {
         } finally {
             mSize = SIZE_NORMAL;
             mColor = Color.GRAY;
+            mColorStateList = null;
         }
 
         try {
@@ -166,6 +191,7 @@ public class FloatingActionButton extends ImageButton {
     private void initAttrs(TypedArray a) {
         setSize(a.getInteger(R.styleable.FloatingActionButton_floatingActionButtonSize, SIZE_NORMAL));
         setColor(a.getColor(R.styleable.FloatingActionButton_floatingActionButtonColor, Color.GRAY));
+        setColorStateList(a.getColorStateList(R.styleable.FloatingActionButton_floatingActionButtonColor));
     }
 
     /**
@@ -196,7 +222,8 @@ public class FloatingActionButton extends ImageButton {
                 }
 
                 if (circle instanceof GradientDrawable) {
-                    ((GradientDrawable) circle.mutate()).setColor(mColor);
+                    mCircleDrawable = (GradientDrawable) circle.mutate();
+                    mCircleDrawable.setColor(mColor);
                 }
             }
         }
@@ -206,6 +233,15 @@ public class FloatingActionButton extends ImageButton {
             setBackgroundDrawable(background);
         } else {
             setBackground(background);
+        }
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+
+        if (mCircleDrawable != null && mColorStateList != null) {
+            mCircleDrawable.setColor(mColorStateList.getColorForState(getDrawableState(), mColor));
         }
     }
 
