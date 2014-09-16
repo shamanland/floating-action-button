@@ -22,5 +22,5 @@ repositories {
 }
 
 dependencies {
-    compile 'com.shamanland:fab:0.0.4'
+    compile 'com.shamanland:fab:0.0.5'
 }
