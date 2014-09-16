@@ -242,6 +242,9 @@ public class FloatingActionButton extends ImageButton {
 
         if (mCircleDrawable != null && mColorStateList != null) {
             mCircleDrawable.setColor(mColorStateList.getColorForState(getDrawableState(), mColor));
+
+            // NOTE maybe this line is required only for Gingerbread
+            invalidate();
         }
     }
 
