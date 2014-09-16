@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.shamanland:fab:0.0.3'
+    compile 'com.shamanland:fab:0.0.4'
 }
 ```
 
@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.shamanland:fab:0.0.3-SNAPSHOT'
+    compile 'com.shamanland:fab:0.0.4-SNAPSHOT'
 }
 ```
 
