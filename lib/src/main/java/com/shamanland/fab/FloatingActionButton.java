@@ -6,15 +6,13 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Outline;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewOutlineProvider;
+import android.util.TypedValue;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -222,24 +220,18 @@ public class FloatingActionButton extends ImageButton {
                 Drawable shadow = layers.getDrawable(0);
                 Drawable circle = layers.getDrawable(1);
 
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    if (shadow instanceof GradientDrawable) {
-                        ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
-                    }
-                } else {
-                    setOutlineProvider(new ViewOutlineProvider() {
-                        @Override
-                        public void getOutline(View view, Outline outline) {
-                            circle.getOutline(outline);
-                        }
-                    });
-                    shadow.setAlpha(0);
-                    setElevation(10f);
+                if (shadow instanceof GradientDrawable) {
+                    ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
                 }
 
                 if (circle instanceof GradientDrawable) {
                     mCircleDrawable = (GradientDrawable) circle.mutate();
                     mCircleDrawable.setColor(mColor);
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    background = mCircleDrawable;
+                    setElevation(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
                 }
             }
         }
