@@ -1,16 +1,20 @@
 package com.shamanland.fab;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Outline;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -200,6 +204,7 @@ public class FloatingActionButton extends ImageButton {
      * <p/>
      * Invoked from constructor, but it's allowed to invoke this method manually from code.
      */
+    @TargetApi(21)
     public void initBackground() {
         final int backgroundId;
 
@@ -217,8 +222,19 @@ public class FloatingActionButton extends ImageButton {
                 Drawable shadow = layers.getDrawable(0);
                 Drawable circle = layers.getDrawable(1);
 
-                if (shadow instanceof GradientDrawable) {
-                    ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    if (shadow instanceof GradientDrawable) {
+                        ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
+                    }
+                } else {
+                    setOutlineProvider(new ViewOutlineProvider() {
+                        @Override
+                        public void getOutline(View view, Outline outline) {
+                            circle.getOutline(outline);
+                        }
+                    });
+                    shadow.setAlpha(0);
+                    setElevation(10f);
                 }
 
                 if (circle instanceof GradientDrawable) {
