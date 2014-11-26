@@ -1,6 +1,5 @@
 package com.shamanland.fab;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -12,7 +11,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -202,10 +200,8 @@ public class FloatingActionButton extends ImageButton {
      * <p/>
      * Invoked from constructor, but it's allowed to invoke this method manually from code.
      */
-    @TargetApi(21)
     public void initBackground() {
         final int backgroundId;
-
         if (mSize == SIZE_MINI) {
             backgroundId = R.drawable.com_shamanland_fab_circle_mini;
         } else {
@@ -213,16 +209,11 @@ public class FloatingActionButton extends ImageButton {
         }
 
         Drawable background = getResources().getDrawable(backgroundId);
-
         if (background instanceof LayerDrawable) {
             LayerDrawable layers = (LayerDrawable) background;
             if (layers.getNumberOfLayers() == 2) {
                 Drawable shadow = layers.getDrawable(0);
                 Drawable circle = layers.getDrawable(1);
-
-                if (shadow instanceof GradientDrawable) {
-                    ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
-                }
 
                 if (circle instanceof GradientDrawable) {
                     mCircleDrawable = (GradientDrawable) circle.mutate();
@@ -231,7 +222,13 @@ public class FloatingActionButton extends ImageButton {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     background = mCircleDrawable;
-                    setElevation(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
+                    if (getElevation() == 0) {
+                        setElevation(getResources().getDimensionPixelSize(
+                                R.dimen.floating_action_button_elevation));
+                    }
+                } else if (shadow instanceof GradientDrawable) {
+                    ((GradientDrawable) shadow.mutate()).setGradientRadius(
+                            getShadowRadius(shadow, circle));
                 }
             }
         }

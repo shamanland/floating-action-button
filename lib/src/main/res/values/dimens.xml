@@ -7,4 +7,5 @@
     <dimen name="floating_action_button_margin_normal_minus">-34dp</dimen>
     <dimen name="floating_action_button_margin_mini">26dp</dimen>
     <dimen name="floating_action_button_margin_mini_minus">-26dp</dimen>
+    <dimen name="floating_action_button_elevation">4dp</dimen>
 </resources>
