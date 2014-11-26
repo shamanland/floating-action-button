@@ -12,29 +12,9 @@ JavaDoc is [here][1].
 
 ## Gradle dependency
 
-**Release:**
-
 ```
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compile 'com.shamanland:fab:0.0.5'
-}
-```
-
-**Snapshot:**
-
-```
-repositories {
-    maven {
-        url 'https://oss.sonatype.org/content/groups/public'
-    }
-}
-
-dependencies {
-    compile 'com.shamanland:fab:0.0.5-SNAPSHOT'
+    compile 'com.shamanland:fab:0.0.6'
 }
 ```
 
@@ -108,6 +88,22 @@ fab.setColor(Color.RED);
 fab.initBackground();
 // NOTE standard method of ImageView
 fab.setImageResource(R.drawable.ic_action_my);
+```
+
+**Using of android:elevation attribute**
+
+By default `FloatingActionButton` sets elevation implicitly for API level 21 and higer.
+
+In order to disable implicit behavior use attribute `app:floatingActionButtonImplicitElevation="false"`.
+
+```
+<com.shamanland.fab.FloatingActionButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_action_my"
+    android:elevation="5dp"
+    app:floatingActionButtonImplicitElevation="false"
+    />
 ```
 
 ## License
