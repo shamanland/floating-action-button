@@ -1,6 +1,5 @@
 package com.shamanland.fab;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -12,7 +11,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -194,6 +192,12 @@ public class FloatingActionButton extends ImageButton {
         setSize(a.getInteger(R.styleable.FloatingActionButton_floatingActionButtonSize, SIZE_NORMAL));
         setColor(a.getColor(R.styleable.FloatingActionButton_floatingActionButtonColor, Color.GRAY));
         setColorStateList(a.getColorStateList(R.styleable.FloatingActionButton_floatingActionButtonColor));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (a.getBoolean(R.styleable.FloatingActionButton_floatingActionButtonImplicitElevation, true)) {
+                setElevation(getResources().getDimension(R.dimen.floating_action_button_elevation));
+            }
+        }
     }
 
     /**
@@ -202,14 +206,21 @@ public class FloatingActionButton extends ImageButton {
      * <p/>
      * Invoked from constructor, but it's allowed to invoke this method manually from code.
      */
-    @TargetApi(21)
     public void initBackground() {
         final int backgroundId;
 
         if (mSize == SIZE_MINI) {
-            backgroundId = R.drawable.com_shamanland_fab_circle_mini;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                backgroundId = R.drawable.com_shamanland_fab_circle_mini;
+            } else {
+                backgroundId = R.drawable.com_shamanland_fab_mini;
+            }
         } else {
-            backgroundId = R.drawable.com_shamanland_fab_circle_normal;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                backgroundId = R.drawable.com_shamanland_fab_circle_normal;
+            } else {
+                backgroundId = R.drawable.com_shamanland_fab_normal;
+            }
         }
 
         Drawable background = getResources().getDrawable(backgroundId);
@@ -225,15 +236,11 @@ public class FloatingActionButton extends ImageButton {
                 }
 
                 if (circle instanceof GradientDrawable) {
-                    mCircleDrawable = (GradientDrawable) circle.mutate();
-                    mCircleDrawable.setColor(mColor);
-                }
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    background = mCircleDrawable;
-                    setElevation(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
+                    initCircleDrawable(circle);
                 }
             }
+        } else if (background instanceof GradientDrawable) {
+            initCircleDrawable(background);
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
@@ -242,6 +249,11 @@ public class FloatingActionButton extends ImageButton {
         } else {
             setBackground(background);
         }
+    }
+
+    private void initCircleDrawable(Drawable circle) {
+        mCircleDrawable = (GradientDrawable) circle.mutate();
+        mCircleDrawable.setColor(mColor);
     }
 
     @Override

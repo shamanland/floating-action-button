@@ -2,6 +2,7 @@
 <resources>
     <dimen name="floating_action_button_size_normal">56dp</dimen>
     <dimen name="floating_action_button_size_mini">40dp</dimen>
+    <dimen name="floating_action_button_elevation">4dp</dimen>
     <dimen name="floating_action_button_shadow_radius">6dp</dimen>
     <dimen name="floating_action_button_margin_normal">34dp</dimen>
     <dimen name="floating_action_button_margin_normal_minus">-34dp</dimen>
