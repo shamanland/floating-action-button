@@ -12,29 +12,9 @@ JavaDoc is [here][1].
 
 ## Gradle dependency
 
-**Release:**
-
 ```
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compile 'com.shamanland:fab:0.0.4'
-}
-```
-
-**Snapshot:**
-
-```
-repositories {
-    maven {
-        url 'https://oss.sonatype.org/content/groups/public'
-    }
-}
-
-dependencies {
-    compile 'com.shamanland:fab:0.0.4-SNAPSHOT'
+    compile 'com.shamanland:fab:0.0.6'
 }
 ```
 
