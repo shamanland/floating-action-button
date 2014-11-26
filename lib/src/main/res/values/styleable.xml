@@ -10,5 +10,7 @@
             <!-- 40dp -->
             <enum name="mini" value="1"/>
         </attr>
+        <!-- Elevation will be configured for API level 21 according to this attribute. Default value is true. -->
+        <attr name="floatingActionButtonImplicitElevation" format="boolean"/>
     </declare-styleable>
 </resources>

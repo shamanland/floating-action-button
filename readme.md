@@ -1,6 +1,6 @@
 # Floating Action Button
 
-[![Build Status](https://travis-ci.org/shamanland/floating-action-button.svg?branch=master)](https://travis-ci.org/shamanland/floating-action-button)
+[![Build Status](https://travis-ci.org/shamanland/floating-action-button.svg?branch=release)](https://travis-ci.org/shamanland/floating-action-button)
 
 A circular button made of paper that lifts and emits ink reactions on press.
 
@@ -12,29 +12,9 @@ JavaDoc is [here][1].
 
 ## Gradle dependency
 
-**Release:**
-
 ```
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compile 'com.shamanland:fab:0.0.4'
-}
-```
-
-**Snapshot:**
-
-```
-repositories {
-    maven {
-        url 'https://oss.sonatype.org/content/groups/public'
-    }
-}
-
-dependencies {
-    compile 'com.shamanland:fab:0.0.4-SNAPSHOT'
+    compile 'com.shamanland:fab:0.0.6'
 }
 ```
 
