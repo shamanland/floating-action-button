@@ -92,7 +92,7 @@ fab.setImageResource(R.drawable.ic_action_my);
 
 **Using of android:elevation attribute**
 
-By default `FloatingActionButton` sets elevation implicitly for API level 21 and higer.
+By default `FloatingActionButton` sets elevation implicitly for API level 21 and higher.
 
 In order to disable implicit behavior use attribute `app:floatingActionButtonImplicitElevation="false"`.
 
