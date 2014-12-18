@@ -4,9 +4,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:1.0.0'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.11.0'
     }
 }
 
@@ -56,18 +55,5 @@ subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-    }
-
-    if (isSnapshot()) {
-        apply plugin: 'robolectric'
-
-        dependencies {
-            // NOTE workaround for sdkmanager plugin
-            compile 'com.android.support:support-v4:19.0.1'
-
-            androidTestCompile 'junit:junit:4.10'
-            androidTestCompile 'org.robolectric:robolectric:2.3'
-            androidTestCompile 'com.squareup:fest-android:1.0.8'
-        }
     }
 }
