@@ -110,11 +110,14 @@ public class FloatingActionButton extends ImageButton {
      * Sets background color for this button.
      * <p/>
      * Xml attribute: {@code app:floatingActionButtonColor}
+     * <p/>
+     * NOTE: this method sets the <code>mColorStateList</code> field to <code>null</code>
      *
      * @param color color
      */
     public void setColor(int color) {
         mColor = color;
+        mColorStateList = null;
     }
 
     /**
