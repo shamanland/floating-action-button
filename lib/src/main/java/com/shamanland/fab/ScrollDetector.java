@@ -39,12 +39,15 @@ public abstract class ScrollDetector extends GestureDetector.SimpleOnGestureList
 
     public ScrollDetector(Context context) {
         mDetector = new GestureDetector(context, this);
+        mSlop = getSlop(context);
+    }
 
+    protected int getSlop(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
             //noinspection deprecation
-            mSlop = ViewConfiguration.getTouchSlop() * 2;
+            return ViewConfiguration.getTouchSlop() * 2;
         } else {
-            mSlop = ViewConfiguration.get(context).getScaledPagingTouchSlop();
+            return ViewConfiguration.get(context).getScaledPagingTouchSlop();
         }
     }
 
