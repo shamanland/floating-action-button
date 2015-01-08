@@ -14,7 +14,7 @@ JavaDoc is [here][1].
 
 ```
 dependencies {
-    compile 'com.shamanland:fab:0.0.6'
+    compile 'com.shamanland:fab:0.0.7'
 }
 ```
 
