@@ -74,6 +74,10 @@ public class FloatingActionButton extends ImageButton {
     private int mSize;
     private int mColor;
     private ColorStateList mColorStateList;
+    private boolean mShadow;
+    private boolean mImplicitElevation;
+
+    private boolean mUpdateLocked;
 
     private GradientDrawable mCircleDrawable;
 
@@ -94,7 +98,13 @@ public class FloatingActionButton extends ImageButton {
      * @param size {@link #SIZE_NORMAL} or {@link #SIZE_MINI}
      */
     public void setSize(int size) {
+        boolean changed = mSize != size;
+
         mSize = size;
+
+        if (changed) {
+            updateBackground();
+        }
     }
 
     /**
@@ -116,8 +126,42 @@ public class FloatingActionButton extends ImageButton {
      * @param color color
      */
     public void setColor(int color) {
+        boolean changed = mColor != color || mColorStateList != null;
+
         mColor = color;
         mColorStateList = null;
+
+        if (changed) {
+            updateBackground();
+        }
+    }
+
+    public boolean isShadow() {
+        return mShadow;
+    }
+
+    public void setShadow(boolean shadow) {
+        boolean changed = mShadow != shadow;
+
+        mShadow = shadow;
+
+        if (changed) {
+            updateBackground();
+        }
+    }
+
+    public boolean isImplicitElevation() {
+        return mImplicitElevation;
+    }
+
+    public void setImplicitElevation(boolean implicitElevation) {
+        boolean changed = mImplicitElevation != implicitElevation;
+
+        mImplicitElevation = implicitElevation;
+
+        if (changed) {
+            updateBackground();
+        }
     }
 
     /**
@@ -137,7 +181,21 @@ public class FloatingActionButton extends ImageButton {
      * @param colorStateList color
      */
     public void setColorStateList(ColorStateList colorStateList) {
+        boolean changed = mColorStateList != colorStateList;
+
         mColorStateList = colorStateList;
+
+        if (changed) {
+            updateBackground();
+        }
+    }
+
+    public void lockUpdate() {
+        mUpdateLocked = true;
+    }
+
+    public void unlockUpdate() {
+        mUpdateLocked = false;
     }
 
     public FloatingActionButton(Context context) {
@@ -180,11 +238,15 @@ public class FloatingActionButton extends ImageButton {
             mSize = SIZE_NORMAL;
             mColor = Color.GRAY;
             mColorStateList = null;
+            mShadow = true;
+            mImplicitElevation = true;
         }
 
         try {
+            lockUpdate();
             initAttrs(a);
         } finally {
+            unlockUpdate();
             a.recycle();
         }
 
@@ -195,9 +257,11 @@ public class FloatingActionButton extends ImageButton {
         setSize(a.getInteger(R.styleable.FloatingActionButton_floatingActionButtonSize, SIZE_NORMAL));
         setColor(a.getColor(R.styleable.FloatingActionButton_floatingActionButtonColor, Color.GRAY));
         setColorStateList(a.getColorStateList(R.styleable.FloatingActionButton_floatingActionButtonColor));
+        setShadow(a.getBoolean(R.styleable.FloatingActionButton_floatingActionButtonShadow, true));
+        setImplicitElevation(a.getBoolean(R.styleable.FloatingActionButton_floatingActionButtonImplicitElevation, true));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (a.getBoolean(R.styleable.FloatingActionButton_floatingActionButtonImplicitElevation, true)) {
+            if (mImplicitElevation) {
                 setElevation(getResources().getDimension(R.dimen.floating_action_button_elevation));
             }
         }
@@ -226,8 +290,16 @@ public class FloatingActionButton extends ImageButton {
             }
         }
 
-        Drawable background = getResources().getDrawable(backgroundId);
+        updateBackground(getResources().getDrawable(backgroundId));
+    }
 
+    public void updateBackground() {
+        if (!mUpdateLocked) {
+            updateBackground(getBackground());
+        }
+    }
+
+    private void updateBackground(Drawable background) {
         if (background instanceof LayerDrawable) {
             LayerDrawable layers = (LayerDrawable) background;
             if (layers.getNumberOfLayers() == 2) {
@@ -235,7 +307,7 @@ public class FloatingActionButton extends ImageButton {
                 Drawable circle = layers.getDrawable(1);
 
                 if (shadow instanceof GradientDrawable) {
-                    ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
+                    ((GradientDrawable) shadow.mutate()).setGradientRadius(mShadow ? getShadowRadius(shadow, circle) : 0f);
                 }
 
                 if (circle instanceof GradientDrawable) {
@@ -244,6 +316,12 @@ public class FloatingActionButton extends ImageButton {
             }
         } else if (background instanceof GradientDrawable) {
             initCircleDrawable(background);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (mImplicitElevation) {
+                setElevation(mShadow ? getResources().getDimension(R.dimen.floating_action_button_elevation) : 0f);
+            }
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
