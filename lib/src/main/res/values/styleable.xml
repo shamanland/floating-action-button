@@ -12,5 +12,7 @@
         </attr>
         <!-- Elevation will be configured for API level 21 according to this attribute. Default value is true. -->
         <attr name="floatingActionButtonImplicitElevation" format="boolean"/>
+        <!-- Show shadow or not, default value is true -->
+        <attr name="floatingActionButtonShadow" format="boolean"/>
     </declare-styleable>
 </resources>
