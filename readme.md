@@ -14,7 +14,7 @@ JavaDoc is [here][1].
 
 ```
 dependencies {
-    compile 'com.shamanland:fab:0.0.7'
+    compile 'com.shamanland:fab:0.0.8'
 }
 ```
 
@@ -28,7 +28,7 @@ dependencies {
 
 **Set custom OnTouchListener for scrollable view:**
 
-```
+```java
 import com.shamanland.fab.FloatingActionButton;
 import com.shamanland.fab.ShowHideOnScroll;
 
@@ -42,7 +42,7 @@ listView.setOnTouchListener(new ShowHideOnScroll(fab));
 
 **With custom animations:**
 
-```
+```java
 listView.setOnTouchListener(new ShowHideOnScroll(fab, R.anim.custom_show, R.anim.custom_hide));
 ```
 
@@ -52,7 +52,7 @@ listView.setOnTouchListener(new ShowHideOnScroll(fab, R.anim.custom_show, R.anim
 
 Declare own style:
 
-```
+```xml
 <style name="AppTheme.Fab" parent="FloatingActionButton">
     <item name="floatingActionButtonColor">@color/my_fab_color</item>
 </style>
@@ -60,7 +60,7 @@ Declare own style:
 
 Link this style in your theme:
 
-```
+```xml
 <style name="AppTheme" parent="android:Theme">
     <item name="floatingActionButtonStyle">@style/AppTheme.Fab</item>
 </style>
@@ -68,7 +68,7 @@ Link this style in your theme:
 
 **Customizing in layout.xml:**
 
-```
+```xml
 <com.shamanland.fab.FloatingActionButton
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -80,7 +80,7 @@ Link this style in your theme:
 
 **Customizing in java-code:**
 
-```
+```java
 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 fab.setSize(FloatingActionButton.SIZE_MINI);
 fab.setColor(Color.RED);
@@ -96,7 +96,7 @@ By default `FloatingActionButton` sets elevation implicitly for API level 21 and
 
 In order to disable implicit behavior use attribute `app:floatingActionButtonImplicitElevation="false"`.
 
-```
+```xml
 <com.shamanland.fab.FloatingActionButton
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
