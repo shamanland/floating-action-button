@@ -307,7 +307,11 @@ public class FloatingActionButton extends ImageButton {
                 Drawable circle = layers.getDrawable(1);
 
                 if (shadow instanceof GradientDrawable) {
-                    ((GradientDrawable) shadow.mutate()).setGradientRadius(mShadow ? getShadowRadius(shadow, circle) : 0f);
+                    if (mShadow) {
+                        ((GradientDrawable) shadow.mutate()).setGradientRadius(getShadowRadius(shadow, circle));
+                    } else {
+                        shadow.setAlpha(0);
+                    }
                 }
 
                 if (circle instanceof GradientDrawable) {
